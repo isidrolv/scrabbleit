@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="row">
+	    <div class="col-6 panel panel-default">
+	    	<div class="panel-heading">
+			    <h1><%= title %></h1>
+			    <p>Welcome to <%= title %></p>
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+			    	<label for="letters" class="form-label">letters to find:</label>
+				    <input class="form-control" id="letters" type='text'>
+				    <div id="emailHelp" class="form-text">please enter the letter you whant to find for.</div>
+				</div>
+				<div class="form-group">
+					<br>
+				    <a class="btn btn-primary" href="#" id="search">Find</a>
+				</div>
+				<div class="form-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<label>Results</label>
+						</div>
+						<div class="panel-body">
+							<table class="table table-stripped table-hover">
+								<tbody id="resultsPanel">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </body>
+  <script type="text/javascript">
+  	$(document).ready(()=> {
+  		$('#resultsPanel').hide();
+  		$('#search').click(()=> {
+  			let letters = $('#letters').val();
+	  		let url = '/words/'+letters;
+  			const query = $.get(url,  
+	    		(data, textStatus, jqXHR)=> {  
+			    	//alert('status: ' + textStatus + ', data:' + JSON.stringify(data));
+			  		$('#resultsPanel').show();
+			  		var str = '<tr><td><span>' + JSON.stringify(data) + '</span></td></tr>';
+			  		$('#resultsPanel').append(str);
+				});
+  		});
+  	});
+  </script>
+</html>
